@@ -17,11 +17,25 @@ for ($row = 8; $row > 0; $row--) {
 	echo "</tr>";
 }
 echo "</table>";
+
+echo "<label for='cmd'><h3>Предыдущий ход</h3></label>";
+echo "<div id='cmd'></div>";
+
+echo "<label for='ret'><h3>Выбывшие фигуры</h3></label>";
+echo "<div id='ret'></div>";
 foreach ($obj[0] as $figure => $fld) {
+	if (($figure == 'cmd') && ($fld == ""))
+		echo "
+			<script type='text/javascript'>
+				document.getElementById('cmd').innerHTML = 'N/A';
+			</script>";
 	echo "
 	<script type='text/javascript'>
-		document.getElementById('".strval($fld)."').innerHTML = '".strval($figure)."';
+		document.getElementById('".strval($fld)."').innerHTML = document.getElementById('".strval($fld)."').innerHTML + '".strval($figure)."';
+		if (document.getElementById('ret').innerHTML == '')
+			document.getElementById('ret').innerHTML = 'N/A';
 	</script>";
+	
 }
 
 ?>
