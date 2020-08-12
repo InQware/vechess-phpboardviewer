@@ -2,6 +2,10 @@
 
 session_start();
 
+if (isset($_POST['submit'])) {
+    $_SESSION['login'] = $_POST['login'];
+    $_SESSION['pass'] = $_POST['pass'];
+}
 if (!isset($_SESSION['login']) || !isset($_SESSION['pass'])) {
     echo "Log in, please";
 	echo "<form method='POST' action='' name='auth'>
@@ -13,21 +17,19 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['pass'])) {
 		<input type='submit' value='Войти' name='submit'>
 		</form>
 	";
-	if (isset($_POST['submit'])) {
-        $_SESSION['login'] = $_POST['login'];
-        $_SESSION['pass'] = $_POST['pass'];
-    }
 
 	//echo "<div id='login'></div>";
 }
 else {
+sleep(0.1);
+echo $_SESSION['login']."__".$_SESSION['pass']."<br />";
 $auth = base64_encode($_SESSION['login'].':'.$_SESSION['pass']);
 $context = stream_context_create([
     "http" => [
         "header" => "Authorization: Basic $auth"
     ]
 ]);
-$json = file_get_contents('http://chess1.metamath.ru/state/', false, $context);
+$json = file_get_contents('http://site0.metamath.ru/api/state/', false, $context);
 $obj = json_decode($json);
 //print_r ($obj);
 echo "<link rel='stylesheet' href='style.css'>";
