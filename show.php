@@ -1,5 +1,27 @@
 <?php
-$auth = base64_encode("admin:admin");
+
+session_start();
+
+if (!isset($_SESSION['login']) || !isset($_SESSION['pass'])) {
+    echo "Log in, please";
+	echo "<form method='POST' action='' name='auth'>
+		<label for='login'>Логин</label>
+		<input type='text' id='login' name='login'></input></br>
+		<label for='pass'>Пароль</label>
+		<input type='password' id='pass' name='pass'></input></br>
+		</br>
+		<input type='submit' value='Войти' name='submit'>
+		</form>
+	";
+	if (isset($_POST['submit'])) {
+        $_SESSION['login'] = $_POST['login'];
+        $_SESSION['pass'] = $_POST['pass'];
+    }
+
+	//echo "<div id='login'></div>";
+}
+else {
+$auth = base64_encode($_SESSION['login'].':'.$_SESSION['pass']);
 $context = stream_context_create([
     "http" => [
         "header" => "Authorization: Basic $auth"
@@ -54,6 +76,7 @@ foreach ($arr as $figure => $fld) {
 				document.getElementById('MoveId').innerHTML = '".strval($fld)."';
 			</script>";
 	
+}
 }
 
 ?>
