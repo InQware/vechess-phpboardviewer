@@ -6,6 +6,10 @@ if (isset($_POST['submit'])) {
     $_SESSION['login'] = $_POST['login'];
     $_SESSION['pass'] = $_POST['pass'];
 }
+if (isset($_POST['s_destroy'])) {
+	session_destroy();
+	header('Location: show.php');
+}
 if (!isset($_SESSION['login']) || !isset($_SESSION['pass'])) {
     echo "Log in, please";
 	echo "<form method='POST' action='' name='auth'>
@@ -17,8 +21,6 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['pass'])) {
 		<input type='submit' value='Войти' name='submit'>
 		</form>
 	";
-
-	//echo "<div id='login'></div>";
 }
 else {
 sleep(0.1);
@@ -79,6 +81,10 @@ foreach ($arr as $figure => $fld) {
 			</script>";
 	
 }
-}
 
+echo "<form method='POST' action='' name='deauth'>
+		<input type='submit' value='Выйти' name='s_destroy'>
+		</form>
+	";
+}
 ?>
