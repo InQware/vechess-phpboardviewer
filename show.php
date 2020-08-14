@@ -5,6 +5,7 @@ session_start();
 if (isset($_POST['submit'])) {
     $_SESSION['login'] = $_POST['login'];
     $_SESSION['pass'] = $_POST['pass'];
+	header('Location: show.php');
 }
 if (isset($_POST['s_destroy'])) {
 	session_destroy();
@@ -23,7 +24,6 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['pass'])) {
 	";
 }
 else {
-sleep(0.1);
 echo $_SESSION['login']."__".$_SESSION['pass']."<br />";
 $auth = base64_encode($_SESSION['login'].':'.$_SESSION['pass']);
 $context = stream_context_create([
