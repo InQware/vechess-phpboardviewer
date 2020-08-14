@@ -31,10 +31,11 @@ $context = stream_context_create([
         "header" => "Authorization: Basic $auth"
     ]
 ]);
+//Получаем от API JSON с расположением фигур и метаданными
 $json = file_get_contents('http://site0.metamath.ru/api/state/', false, $context);
 $obj = json_decode($json);
-//print_r ($obj);
 echo "<link rel='stylesheet' href='style.css'>";
+//Рисуем поле
 echo "<table rows=8 cols=8 border=1>";
 $ltr = Array(1 => 'A', 2 => 'B', 3 => 'C', 4 => 'D', 5 => 'E', 6 => 'F', 7 => 'G', 8 => 'H');
 for ($row = 8; $row > 0; $row--) {
@@ -58,10 +59,10 @@ echo "<div id='cmd'></div>";
 
 echo "<label for='ret'><h3>Выбывшие фигуры</h3></label>";
 echo "<div id='ret'></div>";
-//print_r ($obj);
+//Разбираем JSON
 $array = (array) $obj;
 $arr = json_decode(json_encode($array['board_state']), TRUE);
-//print_r ($arr);
+//Размещаем фигуры
 foreach ($arr as $figure => $fld) {
 	if (($figure == 'cmd') && ($fld == ""))
 		echo "
