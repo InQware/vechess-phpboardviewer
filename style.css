@@ -21,3 +21,7 @@
 .chosenbl {
 	background-color: blue !important;
 }
+
+.movedTo {
+	background-color: green !important;
+}

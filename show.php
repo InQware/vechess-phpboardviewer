@@ -47,12 +47,15 @@ echo "<link rel='stylesheet' href='style.css'>";
 //Get MoveFrom if move started
 if (isset($_GET['cellfromid'])){
 	$_SESSION['MoveFrom'] = $_GET['cellfromid'];
+	unset ($_GET['cellfromid']);
 }
 if (isset($_GET['figmove'])){
 	$_SESSION['FigToMove'] = $_GET['figmove'];
+	unset ($_GET['figmove']);
 }
 if (isset($_GET['celltoid'])){
 	$_SESSION['MoveDst'] = $_GET['celltoid'];
+	unset ($_GET['celltoid']);
 }
 //Рисуем поле
 echo "<table rows=8 cols=8 border=1 id='chboard'>";
@@ -151,7 +154,18 @@ else if ((isset($_SESSION['MoveFrom'])) && (!isset($_SESSION['MoveDst']))){
 }
 
 else if ((isset($_SESSION['MoveFrom'])) && (isset($_SESSION['MoveDst']))){
-	echo 'Moved!';
+	for ($row = 8; $row > 0; $row--) {
+		foreach ($ltr as $key => $r) {
+			$myid = $r.$row;
+			if ($myid == $_SESSION['MoveDst'])
+			{
+				echo "<script type='text/javascript'>
+					document.getElementById('".strval($myid)."').classList.add('movedTo');
+					</script>";
+			}
+
+		}
+	}
 }
 		//<a href='show.php?move=''>Take</a>
 
@@ -167,9 +181,9 @@ $istring = str_replace('=','":"',$istring);
 $istring = '{"'.$istring;
 $istring = $istring.'"}';
 //echo $istring;
-echo '<br/>From: '.$_SESSION['MoveFrom'];
-echo '<br/>To: '.$_SESSION['MoveDst'];
-echo '<br/>Fig: '.$_SESSION['FigToMove'];
+if (isset($_SESSION['MoveFrom'])) echo '<br/>From: '.$_SESSION['MoveFrom'];
+if (isset($_SESSION['MoveDst'])) echo '<br/>To: '.$_SESSION['MoveDst'];
+if (isset($_SESSION['FigToMove'])) echo '<br/>Fig: '.$_SESSION['FigToMove'];
 
 if ($_SESSION['MovePreview'] == true) {
 echo "<form method='POST' action='' name='clmove'>
