@@ -1,3 +1,7 @@
+#chboard {
+	text-align: center;
+}
+
 .bl {
 	width: 50px;
 	height: 50px;
@@ -8,4 +12,12 @@
 	width: 50px;
 	height: 50px;
 	background-color: white;
+}
+
+.chosen {
+	background-color: yellow !important;
+}
+
+.chosenbl {
+	background-color: blue !important;
 }
